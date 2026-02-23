@@ -86,7 +86,7 @@
   </div>
   <div class="pill">
     <span class="dot" id="connDot"></span>
-    <span id="connText">Connecting…</span>
+    <span id="connText">Checking…</span>
   </div>
 </header>
 
@@ -263,12 +263,17 @@
   // Show defaults immediately
   cropSel.addEventListener("change", applySelectedDefaultProfile);
 
-  // Basic connection indicator (no /status needed)
-  // Try a lightweight ping to update indicator. If you don't have /status, this will just show disconnected.
-  function ping(){
-    fetch(base + "/status", { cache:"no-store" })
-      .then(()=> setConnected(true))
-      .catch(()=> setConnected(false));
+  // ---- Connection indicator (accurate) ----
+  // IMPORTANT: ESP32 must implement GET /ping and respond with plain text "OK"
+  async function ping(){
+    try{
+      const res = await fetch(base + "/ping", { cache:"no-store" });
+      if(!res.ok) throw new Error("bad");
+      const txt = (await res.text()).trim();
+      setConnected(txt === "OK");
+    }catch(e){
+      setConnected(false);
+    }
   }
 
   applySelectedDefaultProfile();
