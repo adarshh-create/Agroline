@@ -7,149 +7,72 @@
 
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#121a33;
-      --text:#e7ecff;
-      --muted:#a7b2d8;
+      --bg:#0b1020; --card:#121a33; --text:#e7ecff; --muted:#a7b2d8;
       --border:rgba(255,255,255,.12);
-      --good:#22c55e;
-      --warn:#f59e0b;
-      --bad:#ef4444;
-      --accent:#6ee7ff;
-      --radius:16px;
-      --tap:48px;
+      --good:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+      --radius:16px; --tap:48px;
     }
-
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto;
-      background:var(--bg);
-      color:var(--text);
-    }
-
-    .wrap{
-      max-width:1100px;
-      margin:auto;
-      padding:16px;
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1100px;margin:auto;padding:16px}
 
     header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:14px;
-      background:var(--card);
-      border-radius:var(--radius);
-      border:1px solid var(--border);
-      flex-wrap:wrap;
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:14px;background:var(--card);border-radius:var(--radius);
+      border:1px solid var(--border);flex-wrap:wrap;
     }
-
     h1{margin:0;font-size:20px}
     .sub{font-size:13px;color:var(--muted)}
 
     .pill{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      font-size:13px;
+      display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      border:1px solid var(--border);font-size:13px
     }
-
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:var(--warn);
-    }
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--warn)}
     .dot.good{background:var(--good)}
     .dot.bad{background:var(--bad)}
 
-    .grid{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
-    }
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
 
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      border:1px solid var(--border);
-      padding:14px;
-    }
-
-    h2{
-      margin:0 0 10px 0;
-      font-size:15px;
-    }
-
-    label{
-      font-size:12px;
-      color:var(--muted);
-    }
+    .card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:14px}
+    h2{margin:0 0 10px 0;font-size:15px}
+    label{font-size:12px;color:var(--muted)}
 
     select,button{
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#0e1630;
-      color:var(--text);
-      min-height:var(--tap);
-      margin-top:6px;
+      width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);
+      background:#0e1630;color:var(--text);min-height:var(--tap);margin-top:6px
     }
-
     button{cursor:pointer}
     button.primary{background:#163d52}
     button.good{background:#14361f}
     button.danger{background:#3a1212}
-    button:disabled{opacity:.4}
+    button:disabled{opacity:.4;cursor:not-allowed}
 
-    .row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .row > *{flex:1}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .row>*{flex:1}
 
-    .kv{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
-    @media(max-width:450px){
-      .kv{grid-template-columns:1fr}
-    }
-
-    .box{
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:10px;
-    }
-
+    .kv{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+    @media(max-width:450px){.kv{grid-template-columns:1fr}}
+    .box{border:1px solid var(--border);border-radius:12px;padding:10px}
     .k{font-size:11px;color:var(--muted)}
     .v{font-size:14px;font-weight:600;margin-top:4px}
 
-    .dpad{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
+    .dpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
     .empty{visibility:hidden}
 
-    footer{
-      text-align:center;
-      font-size:12px;
+    .note{
+      margin-top:10px;
+      padding:10px;
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:12px;
       color:var(--muted);
-      margin-top:14px;
+      font-size:12px;
+      line-height:1.35;
+      background:rgba(255,255,255,.03);
     }
+
+    footer{text-align:center;font-size:12px;color:var(--muted);margin-top:14px}
   </style>
 </head>
 
@@ -159,7 +82,7 @@
 <header>
   <div>
     <h1>Seed Planting Robot</h1>
-    <div class="sub">ESP32 · Semi-Automatic Agriculture Robot</div>
+    <div class="sub">ESP32 · Crop selection · Auto mode + Manual control</div>
   </div>
   <div class="pill">
     <span class="dot" id="connDot"></span>
@@ -169,130 +92,188 @@
 
 <div class="grid">
 
-<!-- LEFT -->
-<section class="card">
-  <h2>Crop Selection</h2>
+  <!-- LEFT -->
+  <section class="card">
+    <h2>Crop Selection</h2>
 
-  <label>Select Crop</label>
-  <select id="crop">
-    <option value="0">Cucumber</option>
-    <option value="1">Ladiesfinger (Okra)</option>
-    <option value="2">Gram (Chickpea)</option>
-    <option value="3">Watermelon</option>
-    <option value="4">Pumpkin</option>
-  </select>
+    <label>Select Crop</label>
+    <select id="crop">
+      <option value="0">Cucumber</option>
+      <option value="1">Ladiesfinger (Okra)</option>
+      <option value="2">Gram (Chickpea)</option>
+      <option value="3">Watermelon</option>
+      <option value="4">Pumpkin</option>
+    </select>
 
-  <div class="row" style="margin-top:10px">
-    <button class="primary" onclick="loadCrop()">Load Profile</button>
-    <button class="good" onclick="startAuto()">Start Auto</button>
-  </div>
+    <div class="row" style="margin-top:10px">
+      <button class="primary" id="btnLoad">Load Profile</button>
+      <button class="good" id="btnStart">Start Auto</button>
+    </div>
 
-  <div class="kv">
-    <div class="box"><div class="k">Seeds / Pit</div><div class="v" id="pSeeds">—</div></div>
-    <div class="box"><div class="k">Pit Depth</div><div class="v" id="pDepth">—</div></div>
-    <div class="box"><div class="k">Pit Spacing</div><div class="v" id="pPit">—</div></div>
-    <div class="box"><div class="k">Row Spacing</div><div class="v" id="pRow">—</div></div>
-    <div class="box"><div class="k">U-Turn Distance</div><div class="v">750 mm</div></div>
-    <div class="box"><div class="k">Spray Time</div><div class="v" id="pSpray">—</div></div>
-  </div>
-</section>
+    <!-- Parameter values shown here -->
+    <div class="kv">
+      <div class="box"><div class="k">Seeds / Pit</div><div class="v" id="pSeeds">—</div></div>
+      <div class="box"><div class="k">Pit Depth</div><div class="v" id="pDepth">—</div></div>
+      <div class="box"><div class="k">Pit Spacing</div><div class="v" id="pPit">—</div></div>
+      <div class="box"><div class="k">Row Spacing</div><div class="v" id="pRow">—</div></div>
+      <div class="box"><div class="k">U-Turn Distance</div><div class="v" id="pUTurn">—</div></div>
+      <div class="box"><div class="k">Spray Time</div><div class="v" id="pSpray">—</div></div>
+    </div>
 
-<!-- RIGHT -->
-<section class="card">
-  <h2>Control & Status</h2>
+    <div class="note">
+      <b>Obstacle sensor not used.</b> So the robot will not auto-pause for obstacles.
+      Manual controls are always available from the web page.<br><br>
+      <b>U-turn distance = 500 mm</b> (compact turning based on robot size 42×35 cm).
+    </div>
+  </section>
 
-  <div class="row">
-    <button class="primary" id="resume" disabled onclick="resumeAuto()">Resume</button>
-    <button class="danger" onclick="stopAuto()">STOP</button>
-  </div>
+  <!-- RIGHT -->
+  <section class="card">
+    <h2>Controls</h2>
 
-  <h2 style="margin-top:14px">Manual Control</h2>
-  <div class="sub">Enabled only when obstacle is detected</div>
+    <div class="row">
+      <button class="danger" id="btnStop">STOP</button>
+      <button class="primary" id="btnResume">Resume Auto</button>
+    </div>
 
-  <div class="dpad">
-    <div class="empty"></div>
-    <button id="f" disabled onclick="manual('F')">Forward</button>
-    <div class="empty"></div>
+    <h2 style="margin-top:14px">Manual Control</h2>
+    <div class="sub">Always enabled (since no obstacle sensor)</div>
 
-    <button id="l" disabled onclick="manual('L')">Left</button>
-    <button id="s" disabled onclick="manual('S')">Stop</button>
-    <button id="r" disabled onclick="manual('R')">Right</button>
+    <div class="dpad">
+      <div class="empty"></div>
+      <button id="mF">Forward</button>
+      <div class="empty"></div>
 
-    <div class="empty"></div>
-    <button id="b" disabled onclick="manual('B')">Reverse</button>
-    <div class="empty"></div>
-  </div>
+      <button id="mL">Left</button>
+      <button id="mS" class="danger">Stop</button>
+      <button id="mR">Right</button>
 
-  <div class="kv" style="margin-top:12px">
-    <div class="box"><div class="k">Obstacle</div><div class="v" id="stObs">—</div></div>
-    <div class="box"><div class="k">State</div><div class="v" id="stState">—</div></div>
-    <div class="box"><div class="k">Row</div><div class="v" id="stRow">—</div></div>
-    <div class="box"><div class="k">Pit</div><div class="v" id="stPit">—</div></div>
-  </div>
-</section>
+      <div class="empty"></div>
+      <button id="mB">Reverse</button>
+      <div class="empty"></div>
+    </div>
+
+    <div class="note" id="msgBox">
+      Tip: Use manual buttons to correct position anytime. Then press <b>Resume Auto</b>.
+    </div>
+  </section>
 
 </div>
 
 <footer>
-  Optimized for Mobile · Tablet · Desktop | ESP32 Local Web Server
+  Responsive on Mobile · Tablet · Desktop | ESP32 Local Web
 </footer>
 
 </div>
 
 <script>
-const base = ""; // ESP32 IP if opened remotely
-const pollMs = 700;
+  // If ESP32 serves this page => base = ""
+  // If you open this page from phone and ESP32 IP is 192.168.4.1 => base = "http://192.168.4.1"
+  const base = "";
 
-function api(url){
-  return fetch(base+url).then(r=>r.json());
-}
+  // Default Crop Values (U-turn = 500mm)
+  // Note: Gram row spacing must be >= robot width (350mm). Using 400mm safe.
+  const CROP_PROFILES = [
+    { name:"Cucumber",            seeds:2, depth:25, pit:600,  row:1500, uturn:500, spray:400 },
+    { name:"Ladiesfinger (Okra)", seeds:1, depth:15, pit:200,  row:450,  uturn:500, spray:250 },
+    { name:"Gram (Chickpea)",     seeds:1, depth:80, pit:100,  row:400,  uturn:500, spray:150 },
+    { name:"Watermelon",          seeds:2, depth:25, pit:900,  row:2500, uturn:500, spray:500 },
+    { name:"Pumpkin",             seeds:2, depth:25, pit:2000, row:2000, uturn:500, spray:600 }
+  ];
 
-function loadCrop(){
-  fetch(base+`/crop?id=${crop.value}`);
-}
+  const $ = (id) => document.getElementById(id);
 
-function startAuto(){
-  fetch(base+`/start?crop=${crop.value}`);
-}
+  const connDot = $("connDot"), connText = $("connText");
+  const cropSel = $("crop");
 
-function stopAuto(){
-  fetch(base+`/stop`);
-}
+  const pSeeds = $("pSeeds"), pDepth = $("pDepth"), pPit = $("pPit"),
+        pRow = $("pRow"), pUTurn = $("pUTurn"), pSpray = $("pSpray");
 
-function resumeAuto(){
-  fetch(base+`/resume`);
-}
+  const btnLoad = $("btnLoad"), btnStart = $("btnStart"), btnStop = $("btnStop"), btnResume = $("btnResume");
+  const msgBox = $("msgBox");
 
-function manual(cmd){
-  fetch(base+`/manual?cmd=${cmd}`);
-}
+  const mF = $("mF"), mB = $("mB"), mL = $("mL"), mR = $("mR"), mS = $("mS");
 
-function updateUI(s){
-  connText.textContent="Connected";
-  connDot.className="dot good";
+  function setConnected(ok){
+    if(ok){
+      connText.textContent = "Connected";
+      connDot.className = "dot good";
+    } else {
+      connText.textContent = "Disconnected";
+      connDot.className = "dot bad";
+    }
+  }
 
-  stObs.textContent = s.obstacle?"YES":"NO";
-  stState.textContent = s.state;
-  stRow.textContent = s.row?.current+"/"+s.row?.total;
-  stPit.textContent = s.pit?.current+"/"+s.pit?.total;
+  function showProfile(profile){
+    pSeeds.textContent = profile.seeds;
+    pDepth.textContent = profile.depth + " mm";
+    pPit.textContent   = profile.pit + " mm";
+    pRow.textContent   = profile.row + " mm";
+    pUTurn.textContent = profile.uturn + " mm";
+    pSpray.textContent = profile.spray + " ms";
+  }
 
-  pSeeds.textContent = s.profile?.seeds_per_pit ?? "—";
-  pDepth.textContent = s.profile?.pit_depth_mm+" mm";
-  pPit.textContent = s.profile?.pit_spacing_mm+" mm";
-  pRow.textContent = s.profile?.row_spacing_mm+" mm";
-  pSpray.textContent = s.profile?.spray_ms+" ms";
+  function applySelectedDefaultProfile(){
+    const id = Number(cropSel.value);
+    showProfile(CROP_PROFILES[id]);
+  }
 
-  const manualOn = s.state?.includes("PAUSED");
-  ["f","b","l","r","s"].forEach(id=>document.getElementById(id).disabled=!manualOn);
-  resume.disabled = !manualOn;
-}
+  function apiPost(path){
+    return fetch(base + path, { method:"POST" });
+  }
 
-setInterval(()=>{
-  api("/status").then(updateUI).catch(()=>{
-    connText.textContent="Disconnected";
-    connDot.className="dot bad";
-  });
-},pollMs);
+  // ----- Buttons -----
+  btnLoad.onclick   = () => {
+    apiPost(`/crop?id=${encodeURIComponent(cropSel.value)}`)
+      .then(()=> msgBox.innerHTML = "Crop profile loaded on ESP32.")
+      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+  };
+
+  btnStart.onclick  = () => {
+    apiPost(`/start?crop=${encodeURIComponent(cropSel.value)}`)
+      .then(()=> msgBox.innerHTML = "Auto mode started.")
+      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+  };
+
+  btnStop.onclick   = () => {
+    apiPost(`/stop`)
+      .then(()=> msgBox.innerHTML = "STOP sent. Robot should halt.")
+      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+  };
+
+  btnResume.onclick = () => {
+    apiPost(`/resume`)
+      .then(()=> msgBox.innerHTML = "Resume sent. Auto mode continues.")
+      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+  };
+
+  // Manual buttons
+  function manual(cmd){
+    apiPost(`/manual?cmd=${cmd}`)
+      .then(()=> msgBox.innerHTML = `Manual command sent: <b>${cmd}</b>`)
+      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+  }
+
+  mF.onclick = () => manual("F");
+  mB.onclick = () => manual("B");
+  mL.onclick = () => manual("L");
+  mR.onclick = () => manual("R");
+  mS.onclick = () => manual("S");
+
+  // Show defaults immediately
+  cropSel.addEventListener("change", applySelectedDefaultProfile);
+
+  // Basic connection indicator (no /status needed)
+  // Try a lightweight ping to update indicator. If you don't have /status, this will just show disconnected.
+  function ping(){
+    fetch(base + "/status", { cache:"no-store" })
+      .then(()=> setConnected(true))
+      .catch(()=> setConnected(false));
+  }
+
+  applySelectedDefaultProfile();
+  ping();
+  setInterval(ping, 1500);
 </script>
 
 </body>
