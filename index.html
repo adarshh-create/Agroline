@@ -61,10 +61,11 @@
     .dpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
     .empty{visibility:hidden}
 
-    .note{
+    /* Message box (kept, but no “sensor” text now) */
+    .msg{
       margin-top:10px;
       padding:10px;
-      border:1px dashed rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.14);
       border-radius:12px;
       color:var(--muted);
       font-size:12px;
@@ -110,7 +111,7 @@
       <button class="good" id="btnStart">Start Auto</button>
     </div>
 
-    <!-- Parameter values shown here -->
+    <!-- Parameter values shown here (distance units removed as you asked) -->
     <div class="kv">
       <div class="box"><div class="k">Seeds / Pit</div><div class="v" id="pSeeds">—</div></div>
       <div class="box"><div class="k">Pit Depth</div><div class="v" id="pDepth">—</div></div>
@@ -120,10 +121,8 @@
       <div class="box"><div class="k">Spray Time</div><div class="v" id="pSpray">—</div></div>
     </div>
 
-    <div class="note">
-      <b>Obstacle sensor not used.</b> So the robot will not auto-pause for obstacles.
-      Manual controls are always available from the web page.<br><br>
-      <b>U-turn distance = 500 mm</b> (compact turning based on robot size 42×35 cm).
+    <div class="msg" id="msgBoxLeft">
+      Select a crop, then press <b>Load Profile</b> and <b>Start Auto</b>.
     </div>
   </section>
 
@@ -137,7 +136,7 @@
     </div>
 
     <h2 style="margin-top:14px">Manual Control</h2>
-    <div class="sub">Always enabled (since no obstacle sensor)</div>
+    <div class="sub">Use manual buttons anytime</div>
 
     <div class="dpad">
       <div class="empty"></div>
@@ -153,8 +152,8 @@
       <div class="empty"></div>
     </div>
 
-    <div class="note" id="msgBox">
-      Tip: Use manual buttons to correct position anytime. Then press <b>Resume Auto</b>.
+    <div class="msg" id="msgBoxRight">
+      Tip: Use manual buttons to correct position, then press <b>Resume Auto</b>.
     </div>
   </section>
 
@@ -171,8 +170,7 @@
   // If you open this page from phone and ESP32 IP is 192.168.4.1 => base = "http://192.168.4.1"
   const base = "";
 
-  // Default Crop Values (U-turn = 500mm)
-  // Note: Gram row spacing must be >= robot width (350mm). Using 400mm safe.
+  // Default Crop Values (numbers only; units removed in UI)
   const CROP_PROFILES = [
     { name:"Cucumber",            seeds:2, depth:25, pit:600,  row:1500, uturn:500, spray:400 },
     { name:"Ladiesfinger (Okra)", seeds:1, depth:15, pit:200,  row:450,  uturn:500, spray:250 },
@@ -190,7 +188,8 @@
         pRow = $("pRow"), pUTurn = $("pUTurn"), pSpray = $("pSpray");
 
   const btnLoad = $("btnLoad"), btnStart = $("btnStart"), btnStop = $("btnStop"), btnResume = $("btnResume");
-  const msgBox = $("msgBox");
+  const msgBoxLeft = $("msgBoxLeft");
+  const msgBoxRight = $("msgBoxRight");
 
   const mF = $("mF"), mB = $("mB"), mL = $("mL"), mR = $("mR"), mS = $("mS");
 
@@ -205,12 +204,13 @@
   }
 
   function showProfile(profile){
+    // units removed: just show numbers
     pSeeds.textContent = profile.seeds;
-    pDepth.textContent = profile.depth + " mm";
-    pPit.textContent   = profile.pit + " mm";
-    pRow.textContent   = profile.row + " mm";
-    pUTurn.textContent = profile.uturn + " mm";
-    pSpray.textContent = profile.spray + " ms";
+    pDepth.textContent = profile.depth;
+    pPit.textContent   = profile.pit;
+    pRow.textContent   = profile.row;
+    pUTurn.textContent = profile.uturn;
+    pSpray.textContent = profile.spray;
   }
 
   function applySelectedDefaultProfile(){
@@ -225,33 +225,33 @@
   // ----- Buttons -----
   btnLoad.onclick   = () => {
     apiPost(`/crop?id=${encodeURIComponent(cropSel.value)}`)
-      .then(()=> msgBox.innerHTML = "Crop profile loaded on ESP32.")
-      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+      .then(()=> msgBoxLeft.innerHTML = "Crop profile loaded.")
+      .catch(()=> msgBoxLeft.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
   };
 
   btnStart.onclick  = () => {
     apiPost(`/start?crop=${encodeURIComponent(cropSel.value)}`)
-      .then(()=> msgBox.innerHTML = "Auto mode started.")
-      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+      .then(()=> msgBoxLeft.innerHTML = "Auto mode started.")
+      .catch(()=> msgBoxLeft.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
   };
 
   btnStop.onclick   = () => {
     apiPost(`/stop`)
-      .then(()=> msgBox.innerHTML = "STOP sent. Robot should halt.")
-      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+      .then(()=> msgBoxRight.innerHTML = "STOP sent.")
+      .catch(()=> msgBoxRight.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
   };
 
   btnResume.onclick = () => {
     apiPost(`/resume`)
-      .then(()=> msgBox.innerHTML = "Resume sent. Auto mode continues.")
-      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+      .then(()=> msgBoxRight.innerHTML = "Resume sent.")
+      .catch(()=> msgBoxRight.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
   };
 
   // Manual buttons
   function manual(cmd){
     apiPost(`/manual?cmd=${cmd}`)
-      .then(()=> msgBox.innerHTML = `Manual command sent: <b>${cmd}</b>`)
-      .catch(()=> msgBox.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
+      .then(()=> msgBoxRight.innerHTML = `Manual command: <b>${cmd}</b>`)
+      .catch(()=> msgBoxRight.innerHTML = "Failed to reach ESP32. Check Wi-Fi/IP.");
   }
 
   mF.onclick = () => manual("F");
@@ -260,11 +260,10 @@
   mR.onclick = () => manual("R");
   mS.onclick = () => manual("S");
 
-  // Show defaults immediately
   cropSel.addEventListener("change", applySelectedDefaultProfile);
 
-  // ---- Connection indicator (accurate) ----
-  // IMPORTANT: ESP32 must implement GET /ping and respond with plain text "OK"
+  // Accurate connection indicator:
+  // ESP32 must implement GET /ping and respond with plain text "OK"
   async function ping(){
     try{
       const res = await fetch(base + "/ping", { cache:"no-store" });
